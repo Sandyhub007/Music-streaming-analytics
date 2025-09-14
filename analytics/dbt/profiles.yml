@@ -1,0 +1,23 @@
+music_streaming_analytics:
+  outputs:
+    dev:
+      type: postgres
+      threads: 4
+      host: localhost
+      port: 5432
+      user: airflow
+      pass: airflow
+      dbname: airflow
+      schema: music_analytics_dev
+
+    prod:
+      type: postgres
+      threads: 8
+      host: localhost
+      port: 5432
+      user: airflow
+      pass: airflow
+      dbname: airflow
+      schema: music_analytics_prod
+
+  target: dev

@@ -1,0 +1,24 @@
+name: music_events_checkpoint
+config_version: 1
+class_name: SimpleCheckpoint
+run_name_template: "%Y%m%d-%H%M%S-music-events-validation"
+
+validations:
+  - batch_request:
+      datasource_name: music_events_db
+      data_connector_name: default_inferred_data_connector
+      data_asset_name: music_events
+    expectation_suite_name: music_events_suite
+
+action_list:
+  - name: store_validation_result
+    action:
+      class_name: StoreValidationResultAction
+  - name: store_evaluation_params
+    action:
+      class_name: StoreEvaluationParametersAction
+  - name: update_data_docs
+    action:
+      class_name: UpdateDataDocsAction
+      site_names:
+        - local_site

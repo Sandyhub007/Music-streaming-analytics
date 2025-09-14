@@ -1,0 +1,67 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw data from Kafka streaming
+    tables:
+      - name: music_events
+        description: Raw music streaming events
+        columns:
+          - name: event_id
+            description: Unique identifier for each event
+            tests:
+              - unique
+              - not_null
+          - name: event_ts
+            description: Timestamp when the event occurred
+            tests:
+              - not_null
+          - name: user_id
+            description: Unique identifier for the user
+            tests:
+              - not_null
+          - name: song_id
+            description: Unique identifier for the song
+            tests:
+              - not_null
+          - name: artist_id
+            description: Unique identifier for the artist
+            tests:
+              - not_null
+          - name: action
+            description: Type of action (play, pause, skip, complete)
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['play', 'pause', 'skip', 'complete']
+          - name: device
+            description: Device type used for streaming
+            tests:
+              - not_null
+              - accepted_values:
+                  values: ['mobile', 'web', 'tv', 'desktop']
+          - name: location
+            description: Geographic location of the user
+
+models:
+  - name: stg_music_events
+    description: Staged music events with derived fields
+    columns:
+      - name: event_id
+        description: Unique identifier for each event
+        tests:
+          - unique
+          - not_null
+      - name: event_hour
+        description: Hour of the day when event occurred (0-23)
+        tests:
+          - not_null
+      - name: day_of_week
+        description: Day of week (0=Sunday, 6=Saturday)
+        tests:
+          - not_null
+      - name: is_play_event
+        description: Binary flag indicating if this is a play event
+        tests:
+          - accepted_values:
+              values: [0, 1]
