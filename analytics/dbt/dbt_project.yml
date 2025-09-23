@@ -27,9 +27,6 @@ models:
     marts:
       +materialized: table
 
-# Add documentation and testing configurations
-docs:
-  generate: true
-
+# Testing configurations
 tests:
   +store_failures: true
